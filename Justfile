@@ -1,6 +1,7 @@
 set dotenv-load := true
 
 backend := "backend"
+frontend := "frontend"
 
 # List available recipes
 default:
@@ -12,6 +13,10 @@ default:
 install:
     cd {{backend}} && pip install -e ".[dev]"
 
+# Install frontend dependencies
+install-ui:
+    cd {{frontend}} && npm install
+
 # ── Dev server ────────────────────────────────────────────────────────────────
 
 # Run dev server with auto-reload
@@ -21,6 +26,14 @@ dev:
 # Run dev server on a custom host/port
 dev-on host="0.0.0.0" port="8000":
     cd {{backend}} && uvicorn dental_erp.main:app --reload --host {{host}} --port {{port}}
+
+# Run frontend dev server (Vite, http://localhost:5173)
+dev-ui:
+    cd {{frontend}} && npm run dev
+
+# Build frontend for production
+build-ui:
+    cd {{frontend}} && npm run build
 
 # ── Tests ─────────────────────────────────────────────────────────────────────
 
@@ -78,9 +91,13 @@ up:
 down:
     docker compose down
 
-# Show live logs
+# Show live logs (backend)
 logs:
     docker compose logs -f backend
+
+# Show live logs (frontend)
+logs-ui:
+    docker compose logs -f frontend
 
 # Health check against running container
 health:
