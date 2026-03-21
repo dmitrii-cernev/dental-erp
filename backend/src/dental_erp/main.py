@@ -6,6 +6,7 @@ from dental_erp.auth.router import router as auth_router
 from dental_erp.clients.router import router as clients_router
 from dental_erp.doctors.router import router as doctors_router
 from dental_erp.users.router import router as users_router
+from dental_erp.dashboard.router import router as dashboard_router
 from dental_erp.reports.router import router as reports_router
 from dental_erp.visits.router import router as visits_router
 from dental_erp.workers.router import router as workers_router
@@ -27,6 +28,7 @@ def create_app() -> FastAPI:
     app.include_router(workers_router)
     app.include_router(visits_router)
     app.include_router(reports_router)
+    app.include_router(dashboard_router)
     return app
 
 
