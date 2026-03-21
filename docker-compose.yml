@@ -9,7 +9,18 @@ services:
       DATABASE_URL: sqlite:////data/dental_erp.db
       SECRET_KEY: ${SECRET_KEY:-changeme-please-set-in-env}
       ACCESS_TOKEN_EXPIRE_MINUTES: 480
-      CORS_ORIGINS: '["http://localhost:5173"]'
+      CORS_ORIGINS: '["http://localhost:5173","http://localhost","http://localhost:80"]'
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8000}
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
     restart: unless-stopped
 
 volumes:
