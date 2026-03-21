@@ -4,7 +4,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - dental_data:/data
+      - ./data:/data
     environment:
       DATABASE_URL: sqlite:////data/dental_erp.db
       SECRET_KEY: ${SECRET_KEY:-changeme-please-set-in-env}
@@ -23,5 +23,3 @@ services:
       - backend
     restart: unless-stopped
 
-volumes:
-  dental_data:
