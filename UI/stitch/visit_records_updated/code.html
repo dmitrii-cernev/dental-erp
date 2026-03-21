@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Visit Management - DentalPro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-variant": "#d9e4ea",
+              "on-background": "#2a3439",
+              "on-secondary-fixed-variant": "#485e6e",
+              "outline": "#717c82",
+              "on-primary": "#f4f8ff",
+              "on-primary-fixed-variant": "#006191",
+              "tertiary-container": "#d0d9f7",
+              "primary": "#006496",
+              "tertiary-fixed-dim": "#c2cbe9",
+              "primary-fixed-dim": "#afd9ff",
+              "on-tertiary-fixed-variant": "#4c566f",
+              "inverse-primary": "#79bff8",
+              "on-error-container": "#752121",
+              "secondary-fixed-dim": "#bfd8ea",
+              "outline-variant": "#a9b4b9",
+              "on-secondary-fixed": "#2b4251",
+              "primary-dim": "#005784",
+              "on-secondary-container": "#3e5564",
+              "on-tertiary": "#f9f8ff",
+              "on-surface": "#2a3439",
+              "surface-container": "#e8eff3",
+              "surface-dim": "#cfdce3",
+              "secondary-container": "#cde6f8",
+              "background": "#f7f9fb",
+              "surface-container-high": "#e1e9ee",
+              "secondary-dim": "#3f5665",
+              "surface-container-highest": "#d9e4ea",
+              "on-tertiary-container": "#434c65",
+              "on-primary-fixed": "#004367",
+              "tertiary-fixed": "#d0d9f7",
+              "on-surface-variant": "#566166",
+              "on-tertiary-fixed": "#303951",
+              "on-secondary": "#f5f9ff",
+              "primary-container": "#cce5ff",
+              "secondary": "#4b6272",
+              "error": "#9f403d",
+              "tertiary": "#555f78",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#006496",
+              "secondary-fixed": "#cde6f8",
+              "inverse-surface": "#0b0f10",
+              "tertiary-dim": "#49536b",
+              "error-dim": "#4e0309",
+              "on-primary-container": "#005683",
+              "surface-container-low": "#f0f4f7",
+              "primary-fixed": "#cce5ff",
+              "surface-bright": "#f7f9fb",
+              "surface": "#f7f9fb",
+              "inverse-on-surface": "#9a9d9f",
+              "error-container": "#fe8983",
+              "on-error": "#fff7f6"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .headline { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-container">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r-0 bg-slate-100 dark:bg-slate-900 flex flex-col py-6 px-4 z-50">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold text-sky-900 dark:text-sky-100">DentalPro</h1>
+<p class="text-xs text-on-surface-variant font-medium">Clinical ERP</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-medium">Patients</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-slate-200 dark:bg-slate-800 text-sky-700 dark:text-sky-300 font-semibold rounded-lg opacity-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-medium">Visits</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="font-medium">Staff</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-medium">Reports</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center h-16 px-8">
+<div class="flex items-center gap-6">
+<span class="text-lg font-semibold text-slate-900 dark:text-white">Clinical Curator</span>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-sm w-64 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all" placeholder="Search patients or records..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-gradient-to-br from-primary to-primary-dim text-on-primary py-2 px-5 rounded-full font-bold text-xs shadow-md shadow-primary/20 active:scale-95 transition-transform flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    New Appointment
+                </button>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-800 mx-1"></div>
+<button class="p-2 text-slate-500 hover:text-sky-600 transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 text-slate-500 hover:text-sky-600 transition-colors"><span class="material-symbols-outlined">help</span></button>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-800 mx-1"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold text-on-surface">Dr. Smith</p>
+<p class="text-[10px] text-on-surface-variant font-medium">Senior Surgeon</p>
+</div>
+<img alt="Profile portrait of Dr. Smith" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2gITFxSf9nymoQkHVNDvCoDVdO05TLeF1-M-yWdDnXcO_bgzcwlohUfYuxk378i6cqFVzRh1qN4fT6z5HyRuoLzEqVEVFy1a4dacFDy7qa-6d02yzxY3B5Ma4MO7Go029Op6gHiiaNDjbE9pitpKV396OEt_Fz3p8s7UyZSkToasYg2GfXmM-XSknGS6qgsRA6tGDj6p6h9JtMCk5X9OIRWas7SmjAsd0G-ZDuHlwPuw0gJu3PcQoswkM44B4mJr0iyqL6jFLG5PT"/>
+</div>
+<button class="ml-2 text-sm font-bold text-sky-700 dark:text-sky-400 hover:text-sky-600 transition-colors active:scale-95">Logout</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 min-h-screen">
+<div class="p-8 lg:p-12 max-w-6xl mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<nav class="flex items-center gap-2 text-xs font-semibold text-on-surface-variant mb-3 uppercase tracking-wider">
+<span>Visits</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary">New Log</span>
+</nav>
+<h2 class="text-4xl font-extrabold tracking-tight text-on-surface headline">Visit Management</h2>
+<p class="text-on-surface-variant mt-2 text-lg">Document the clinical encounter with surgical precision.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-3 text-sm font-bold text-primary hover:bg-primary/5 transition-colors rounded-xl border border-primary/20">Discard Draft</button>
+<button class="px-8 py-3 text-sm font-bold bg-gradient-to-r from-primary to-primary-dim text-on-primary rounded-xl shadow-lg shadow-primary/20 active:scale-95 transition-all">Save Visit Record</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Main Form Section (Left) -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Core Details Bento Card -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-white/50">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 bg-primary-container rounded-xl flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">assignment_ind</span>
+</div>
+<h3 class="text-xl font-bold headline">Encounter Information</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-widest pl-1">Patient Name</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline transition-colors group-focus-within:text-primary">person</span>
+<select class="w-full bg-surface-container-low border-none rounded-xl py-4 pl-12 pr-4 focus:bg-surface-container-lowest focus:ring-0 appearance-none transition-all">
+<option>Select Patient</option>
+<option>Alexandra Sterling</option>
+<option>Marcus Thorne</option>
+<option>Elena Rodriguez</option>
+</select>
+<div class="absolute bottom-0 left-0 h-[2px] w-0 bg-primary group-focus-within:w-full transition-all duration-300"></div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-widest pl-1">Attending Doctor</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline transition-colors group-focus-within:text-primary">stethoscope</span>
+<select class="w-full bg-surface-container-low border-none rounded-xl py-4 pl-12 pr-4 focus:bg-surface-container-lowest focus:ring-0 appearance-none transition-all">
+<option>Dr. Julian Smith</option>
+<option>Dr. Sarah Chen</option>
+<option>Dr. Michael Vance</option>
+</select>
+<div class="absolute bottom-0 left-0 h-[2px] w-0 bg-primary group-focus-within:w-full transition-all duration-300"></div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-widest pl-1">Dental Assistant / Worker</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline transition-colors group-focus-within:text-primary">badge</span>
+<select class="w-full bg-surface-container-low border-none rounded-xl py-4 pl-12 pr-4 focus:bg-surface-container-lowest focus:ring-0 appearance-none transition-all">
+<option>Select Staff</option>
+<option>Jessica Miller (Hygienist)</option>
+<option>David Koresh (Assistant)</option>
+</select>
+<div class="absolute bottom-0 left-0 h-[2px] w-0 bg-primary group-focus-within:w-full transition-all duration-300"></div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-widest pl-1">Visit Date &amp; Time</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline transition-colors group-focus-within:text-primary">event</span>
+<input class="w-full bg-surface-container-low border-none rounded-xl py-4 pl-12 pr-4 focus:bg-surface-container-lowest focus:ring-0 appearance-none transition-all" type="datetime-local"/>
+<div class="absolute bottom-0 left-0 h-[2px] w-0 bg-primary group-focus-within:w-full transition-all duration-300"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Services & Billing Bento Card -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-white/50">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-tertiary-container rounded-xl flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined">medical_information</span>
+</div>
+<h3 class="text-xl font-bold headline">Services &amp; Billing</h3>
+</div>
+<button class="text-primary font-bold text-sm flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-sm">add_circle</span>
+                                Add Service
+                            </button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-container-low border border-transparent hover:border-outline-variant/30 transition-all">
+<div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary">cleaning</span>
+</div>
+<div class="flex-1">
+<p class="font-bold text-on-surface">Prophylaxis - Adult</p>
+<p class="text-xs text-on-surface-variant">Standard cleaning and scale</p>
+</div>
+<div class="text-right">
+<input class="w-24 text-right bg-transparent border-none font-bold text-on-surface focus:ring-0 p-0" type="text" value="$125.00"/>
+<p class="text-[10px] uppercase font-bold text-outline">Fee</p>
+</div>
+<button class="text-error opacity-40 hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">delete</span></button>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-surface-container-low border border-transparent hover:border-outline-variant/30 transition-all">
+<div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary">radiology</span>
+</div>
+<div class="flex-1">
+<p class="font-bold text-on-surface">Bitewing Radiographs</p>
+<p class="text-xs text-on-surface-variant">Four films</p>
+</div>
+<div class="text-right">
+<input class="w-24 text-right bg-transparent border-none font-bold text-on-surface focus:ring-0 p-0" type="text" value="$85.00"/>
+<p class="text-[10px] uppercase font-bold text-outline">Fee</p>
+</div>
+<button class="text-error opacity-40 hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-surface-container flex justify-between items-center">
+<span class="text-on-surface-variant font-medium">Total Balance Due</span>
+<span class="text-3xl font-extrabold text-on-surface headline tracking-tight">$210.00</span>
+</div>
+</div>
+</div>
+<!-- Contextual Sidebar (Right) -->
+<div class="lg:col-span-4 space-y-8">
+<!-- Status & Priority Card -->
+<div class="bg-surface-container-high rounded-3xl p-8 border border-white/20">
+<h3 class="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-6">Visit Status</h3>
+<div class="space-y-3">
+<label class="flex items-center gap-4 p-4 rounded-2xl bg-surface-container-lowest border-2 border-primary shadow-sm cursor-pointer group">
+<div class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+</div>
+<span class="font-bold text-on-surface">Scheduled</span>
+<span class="ml-auto material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-2xl bg-white/50 border-2 border-transparent hover:border-white cursor-pointer group transition-all">
+<div class="w-6 h-6 rounded-full border-2 border-outline flex items-center justify-center"></div>
+<span class="font-bold text-on-surface-variant group-hover:text-on-surface">Completed</span>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-2xl bg-white/50 border-2 border-transparent hover:border-white cursor-pointer group transition-all">
+<div class="w-6 h-6 rounded-full border-2 border-outline flex items-center justify-center"></div>
+<span class="font-bold text-on-surface-variant group-hover:text-on-surface">Cancelled</span>
+</label>
+</div>
+<div class="mt-8 space-y-4">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Clinical Notes</label>
+<textarea class="w-full bg-surface-container-lowest border-none rounded-2xl p-4 text-sm focus:ring-2 focus:ring-primary/10 transition-all resize-none" placeholder="Enter findings, treatment plans, or patient concerns..." rows="6"></textarea>
+</div>
+</div>
+<!-- Quick Insights Overlay -->
+<div class="relative overflow-hidden rounded-3xl bg-on-background text-white p-8">
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-primary opacity-20 blur-3xl"></div>
+<h4 class="text-xs font-bold uppercase tracking-widest opacity-60 mb-4">Patient Profile Clip</h4>
+<div class="flex items-center gap-4 mb-6">
+<img alt="Patient portrait" class="w-14 h-14 rounded-2xl object-cover border-2 border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpW6oQ9XhH0wMPDSOltK4y2BLwAKfza-r96HlZg6w5TixkRM6-jz-O7hwytbZEKwgcyxDERNSnKcuIYHxXTF-Js5F6RXU39pYZI8LDIswC_QNGmMWimhWRhSNkkZr3kB8eni2IkRJi8_WTCyKZ5eOmHKiORPEub34TcGjEuqr1ZKQBfBgOo4E627M9rhwM_X3pQM01fAkNiZR08tsPcshyyWX0DpUv1eAGNWzjuN5pBp1XdB6EcfPfvjLgbZkriL-Ki7uVv04i0xGu"/>
+<div>
+<p class="text-lg font-bold headline leading-tight">Alexandra Sterling</p>
+<p class="text-xs opacity-60">DOB: 05/12/1988 • No Allergies</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between text-xs border-b border-white/10 pb-2">
+<span class="opacity-60">Last Visit</span>
+<span class="font-medium">March 14, 2024</span>
+</div>
+<div class="flex justify-between text-xs border-b border-white/10 pb-2">
+<span class="opacity-60">Preferred Room</span>
+<span class="font-medium">Surgery 2A</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="opacity-60">Risk Level</span>
+<span class="text-error-container font-bold">Medium (Cavities)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Toast Concept (Optional for visual richness) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-on-background text-white py-4 px-6 rounded-full shadow-2xl z-50 pointer-events-none opacity-0 transition-opacity">
+<span class="material-symbols-outlined text-primary-fixed-dim">check_circle</span>
+<span class="text-sm font-medium">Record Autosaved at 10:45 AM</span>
+</div>
+</body></html>

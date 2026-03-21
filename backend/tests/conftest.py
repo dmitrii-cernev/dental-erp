@@ -8,10 +8,19 @@ def _import_all_models():
 
 @pytest.fixture(scope="function")
 def test_engine():
-    from dental_erp.core.database import Base, make_engine
+    from sqlalchemy import create_engine
+    from sqlalchemy.pool import StaticPool
+    from dental_erp.core.database import Base, _enable_wal
 
     _import_all_models()
-    engine = make_engine("sqlite:///:memory:")
+    from sqlalchemy import event
+
+    engine = create_engine(
+        "sqlite:///:memory:",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
+    event.listen(engine, "connect", _enable_wal)
     Base.metadata.create_all(engine)
     yield engine
     Base.metadata.drop_all(engine)

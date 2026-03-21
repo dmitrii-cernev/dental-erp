@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Staff Directory | Clinical Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#d1e4fe",
+              "tertiary": "#4e6176",
+              "inverse-on-surface": "#9a9d9e",
+              "on-error-container": "#752121",
+              "error-dim": "#4e0309",
+              "surface-container": "#e8eff1",
+              "surface-bright": "#f8fafb",
+              "on-tertiary-fixed-variant": "#4b5d72",
+              "on-surface": "#2a3437",
+              "on-secondary-fixed-variant": "#465f68",
+              "primary": "#1e667f",
+              "surface-container-low": "#f0f4f6",
+              "tertiary-dim": "#425569",
+              "on-error": "#fff7f6",
+              "secondary-fixed": "#cbe7f1",
+              "on-primary-fixed-variant": "#1a637c",
+              "on-surface-variant": "#566164",
+              "outline": "#727d80",
+              "inverse-primary": "#9bdaf8",
+              "primary-fixed": "#bde9ff",
+              "inverse-surface": "#0b0f10",
+              "on-primary": "#f0f9ff",
+              "on-secondary": "#f0fbff",
+              "surface-container-highest": "#d9e4e8",
+              "on-primary-fixed": "#00455a",
+              "on-secondary-container": "#3c565e",
+              "secondary": "#49636c",
+              "primary-container": "#bde9ff",
+              "surface-dim": "#cfdce0",
+              "error": "#9f403d",
+              "secondary-dim": "#3d575f",
+              "secondary-container": "#cbe7f1",
+              "surface": "#f8fafb",
+              "primary-fixed-dim": "#9eddfa",
+              "on-tertiary-fixed": "#2f4155",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary": "#f7f9ff",
+              "surface-variant": "#d9e4e8",
+              "error-container": "#fe8983",
+              "on-background": "#2a3437",
+              "surface-tint": "#1e667f",
+              "surface-container-high": "#e1eaed",
+              "secondary-fixed-dim": "#bdd9e3",
+              "primary-dim": "#075a72",
+              "background": "#f8fafb",
+              "on-secondary-fixed": "#29434b",
+              "tertiary-fixed": "#d1e4fe",
+              "on-primary-container": "#055972",
+              "on-tertiary-container": "#415368",
+              "tertiary-fixed-dim": "#c3d6ef",
+              "outline-variant": "#a9b4b7"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-card {
+            background: rgba(248, 250, 251, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-screen sticky top-0 left-0 bg-surface-container-low dark:bg-slate-900 h-screen w-64 border-r-0 z-50">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+</div>
+<div>
+<h1 class="text-lg font-black text-[#2a3437] dark:text-white font-headline leading-tight">Sanctuary Dental</h1>
+<p class="text-xs font-label uppercase tracking-widest text-primary">Premium Care</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="text-[#2a3437]/60 dark:text-[#f8fafb]/50 px-8 py-3 flex items-center gap-4 hover:text-[#0D5C75] dark:hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="text-[#2a3437]/60 dark:text-[#f8fafb]/50 px-8 py-3 flex items-center gap-4 hover:text-[#0D5C75] dark:hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-medium">Patients</span>
+</a>
+<a class="text-[#2a3437]/60 dark:text-[#f8fafb]/50 px-8 py-3 flex items-center gap-4 hover:text-[#0D5C75] dark:hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span class="font-medium">Visits</span>
+</a>
+<a class="bg-surface-container-lowest dark:bg-slate-800 text-[#0D5C75] dark:text-[#bde9ff] rounded-l-full ml-4 pl-4 font-bold shadow-sm py-3 flex items-center gap-4 Active: scale 98% duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+<span class="font-medium">Staff</span>
+</a>
+<a class="text-[#2a3437]/60 dark:text-[#f8fafb]/50 px-8 py-3 flex items-center gap-4 hover:text-[#0D5C75] dark:hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-medium">Analytics</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-6 space-y-1">
+<button class="w-full mb-6 bg-gradient-to-br from-primary to-primary-container text-on-primary font-semibold py-3 px-4 rounded-xl shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    New Appointment
+                </button>
+<a class="text-[#2a3437]/60 dark:text-[#f8fafb]/50 px-8 py-2 flex items-center gap-4 hover:text-[#0D5C75] dark:hover:text-white transition-all text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+<a class="text-[#2a3437]/60 dark:text-[#f8fafb]/50 px-8 py-2 flex items-center gap-4 hover:text-[#0D5C75] dark:hover:text-white transition-all text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+                    Support
+                </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-slate-900 docked full-width top-0 z-40 flex justify-between items-center w-full px-6 py-3 sticky">
+<div class="flex items-center gap-4 flex-1">
+<div class="md:hidden w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+</div>
+<div class="relative max-w-md w-full hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20" placeholder="Search staff or roles..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="flex items-center gap-3 ml-2 border-l border-surface-container-highest pl-4">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-on-surface leading-none">Dr. J. Sterling</p>
+<p class="text-[10px] text-primary uppercase tracking-tighter font-semibold">Administrator</p>
+</div>
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Female doctor with stethoscope" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPjdZWhv3NJmlg5-1M7aIDyVj899ITlo6PHxQJvLS-8rU_tgAjLQfhrOr2KBzByX_IYG3YoDJUhrTFf9byPXDVIJ8X0bVEPHCkiM-wVjoZCDYCzlu-KWyI8nHCeLG3hnVV9drfq4ME2__Xb9_6bxl_v4bHGC84l7MEfEcAc3Snp78tUyxYdKquoAjEvq6a7tGbcyd0VgnmX0QQ0LJilPILGToX3jKMeojbCUtv6Dq9Gr0mJMeq5lwLVbhyGVv5AHFBXaa-9UBKDKtR"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-6 md:p-10 max-w-7xl mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+<div>
+<span class="label-sm text-primary font-bold uppercase tracking-widest mb-1 block">Internal Network</span>
+<h2 class="text-4xl font-headline font-extrabold text-on-surface tracking-tight">Staff &amp; Doctors</h2>
+<p class="text-on-surface-variant mt-2 max-w-lg">Manage professional roles, availability, and access levels for the Sanctuary Dental clinical team.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-surface-container-high text-primary px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="filter_list">filter_list</span>
+                            Filter
+                        </button>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-lg" data-icon="person_add">person_add</span>
+                            Add Member
+                        </button>
+</div>
+</div>
+<!-- Bento Grid Sections -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Stats Section (Asymmetric) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-primary-container p-6 rounded-xl flex items-center justify-between">
+<div>
+<p class="text-on-primary-container text-xs font-bold uppercase tracking-wider">Active Staff</p>
+<p class="text-4xl font-headline font-black text-on-primary-container mt-1">24</p>
+</div>
+<div class="w-12 h-12 bg-white/30 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl flex-1">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-wider mb-4">Role Distribution</p>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium">Specialists</span>
+<span class="text-sm font-bold bg-surface-container-highest px-2 py-0.5 rounded text-primary">08</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 35%"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium">Nurses</span>
+<span class="text-sm font-bold bg-surface-container-highest px-2 py-0.5 rounded text-primary">12</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 50%"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium">Administration</span>
+<span class="text-sm font-bold bg-surface-container-highest px-2 py-0.5 rounded text-primary">04</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Staff Directory Grid (Primary Content) -->
+<div class="lg:col-span-8">
+<div class="staff-grid">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/15 hover:shadow-xl transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<img class="w-16 h-16 rounded-xl object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="Portrait of male dentist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHl3VRCpyFpUNMC4ppK5fkL32nvXHKQ4W8dm7h0ppFg6DhxbkbGgJaL7k71Ktaa12Vo2IaR3SVtLDYH-qDl9TZWi-3oR8e7vsCnG2rBesNLfFavuZ7uj8Q-oGc-P8zldDZEnOZz-6dSuDduq91wgkOrW9iE26YBn3n4gRO2W5yJ52FKDCcvCmxYUor9fB2awtWGXv4EglMuxTjibZaGZdcdaYA7SJn8n4ZECcWNduaE4PHyyC49RFqWqXbsyhmWVhTkcpbr2ZypO28"/>
+<div class="flex gap-1">
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span></button>
+</div>
+</div>
+<h3 class="font-headline font-bold text-lg text-on-surface">Dr. Elias Thorne</h3>
+<p class="text-primary font-label text-xs font-bold uppercase tracking-tight mb-4">Senior Orthodontist</p>
+<div class="flex items-center gap-2 text-on-surface-variant text-xs mb-1">
+<span class="material-symbols-outlined text-sm" data-icon="mail">mail</span>
+                                    e.thorne@sanctuary.com
+                                </div>
+<div class="flex items-center gap-2 text-on-surface-variant text-xs mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+                                    Mon - Thu • 08:00 - 17:00
+                                </div>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold rounded uppercase">Surgeon</span>
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] font-bold rounded uppercase">Full-Time</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/15 hover:shadow-xl transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<img class="w-16 h-16 rounded-xl object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="Portrait of female clinical nurse" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXoAAJ4-KbPXDwS59SdUjZKlB4RCA5y4xPB-oYxr1XWnnOYNLtSi09mEoxuEvzQIQo078L8uE5JyvrBzCa3ytuf44CZPhFLMtcOeK93UPLeY61-DNs4ZZZaTFmxHH9Xbp-YFdjAI9BTdpfYPiVMisGAxD0dq5xWzKG8cglM_VZBZf3MSZDfxw1aucS7ApeK2B-OJmSsZCrSj8apF-2fRvaloIX-8OF9rlCpYKnNGpN5ayrPGga07v8FTZZN7KzMp3pTuuZFWpnJqlr"/>
+<div class="flex gap-1">
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span></button>
+</div>
+</div>
+<h3 class="font-headline font-bold text-lg text-on-surface">Sarah Mitchell</h3>
+<p class="text-primary font-label text-xs font-bold uppercase tracking-tight mb-4">Lead Dental Hygienist</p>
+<div class="flex items-center gap-2 text-on-surface-variant text-xs mb-1">
+<span class="material-symbols-outlined text-sm" data-icon="mail">mail</span>
+                                    s.mitchell@sanctuary.com
+                                </div>
+<div class="flex items-center gap-2 text-on-surface-variant text-xs mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+                                    Tue - Sat • 09:00 - 18:00
+                                </div>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold rounded uppercase">Clinical</span>
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] font-bold rounded uppercase">Full-Time</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/15 hover:shadow-xl transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<img class="w-16 h-16 rounded-xl object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="Male physician portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMOvQ2yxb-fUE1OrxslxrwzYDtRU3-SDaeQME5bIUMlrDsbLvNywgsGTlWgnGsKKJBWuiFXkldKzLc8qQB1bFrYcrQBn0TOgNDtBN3QblxAk7grRUdPy1jb33o3jjOJneww8FvlOA9C4Nzlj7_2Z5Z9ic4Dpuug7iFACLg-BTq0CHVr_KJ9CQIMuF6x1xS-yTazKw8DEwwfDDALcpYYV_P1NWeTSuJ2EMEqLDZNDXAy8bmxjQSAqvGeKkxfo-faK1Wa0dORft3DT8I"/>
+<div class="flex gap-1">
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span></button>
+</div>
+</div>
+<h3 class="font-headline font-bold text-lg text-on-surface">Dr. Marcus Vance</h3>
+<p class="text-primary font-label text-xs font-bold uppercase tracking-tight mb-4">Pediatric Dentist</p>
+<div class="flex items-center gap-2 text-on-surface-variant text-xs mb-1">
+<span class="material-symbols-outlined text-sm" data-icon="mail">mail</span>
+                                    m.vance@sanctuary.com
+                                </div>
+<div class="flex items-center gap-2 text-on-surface-variant text-xs mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+                                    Mon, Wed, Fri • 10:00 - 19:00
+                                </div>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold rounded uppercase">Specialist</span>
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] font-bold rounded uppercase">Partner</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/15 hover:shadow-xl transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high flex items-center justify-center text-primary font-bold text-xl uppercase">LW</div>
+<div class="flex gap-1">
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span></button>
+</div>
+</div>
+<h3 class="font-headline font-bold text-lg text-on-surface">Linda Wu</h3>
+<p class="text-primary font-label text-xs font-bold uppercase tracking-tight mb-4">Practice Manager</p>
+<div class="flex items-center gap-2 text-on-surface-variant text-xs mb-1">
+<span class="material-symbols-outlined text-sm" data-icon="mail">mail</span>
+                                    l.wu@sanctuary.com
+                                </div>
+<div class="flex items-center gap-2 text-on-surface-variant text-xs mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+                                    Mon - Fri • 08:30 - 17:30
+                                </div>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold rounded uppercase">Admin</span>
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] font-bold rounded uppercase">Mgmt</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity/Shift Timeline Section -->
+<div class="mt-12 bg-surface-container-low p-8 rounded-2xl">
+<div class="flex items-center justify-between mb-8">
+<div>
+<span class="label-sm text-primary font-bold uppercase tracking-widest block">Operational Logs</span>
+<h3 class="text-2xl font-headline font-bold text-on-surface">Shift Timeline</h3>
+</div>
+<button class="text-primary font-bold text-sm">View Full Logs</button>
+</div>
+<div class="relative pl-8 border-l-2 border-primary-container space-y-8">
+<!-- Timeline Item 1 -->
+<div class="relative">
+<div class="absolute -left-10 top-0 w-4 h-4 rounded-full bg-primary border-4 border-surface-container-low"></div>
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm max-w-2xl transform hover:translate-x-1 transition-transform">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-xs font-bold text-primary uppercase mb-1">Active Now</p>
+<h4 class="font-bold text-on-surface">Dr. Elias Thorne started Morning Clinic</h4>
+<p class="text-sm text-on-surface-variant mt-1">Surgical Suite A • Orthodontic Procedures</p>
+</div>
+<span class="text-[10px] font-bold text-outline uppercase">08:00 AM</span>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative">
+<div class="absolute -left-10 top-0 w-4 h-4 rounded-full bg-surface-container-high border-4 border-surface-container-low"></div>
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm max-w-2xl transform hover:translate-x-1 transition-transform">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-xs font-bold text-outline uppercase mb-1">2 Hours Ago</p>
+<h4 class="font-bold text-on-surface">Staff Meeting: Q4 Patient Flow Optimization</h4>
+<p class="text-sm text-on-surface-variant mt-1">Meeting Room 2 • 12 Attendees</p>
+</div>
+<span class="text-[10px] font-bold text-outline uppercase">06:00 AM</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Padding for mobile bottom nav -->
+<div class="h-24 lg:hidden"></div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2 bg-surface/80 dark:bg-slate-950/80 backdrop-blur-md z-50 rounded-t-xl shadow-[0px_-4px_16px_rgba(42,52,55,0.06)]">
+<a class="flex flex-col items-center justify-center text-[#2a3437]/50 dark:text-white/40 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label text-[10px] font-bold uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2a3437]/50 dark:text-white/40 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+<span class="font-label text-[10px] font-bold uppercase tracking-widest mt-1">Patients</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#bde9ff] dark:bg-[#0D5C75] text-[#0D5C75] dark:text-white rounded-xl px-4 py-1 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+<span class="font-label text-[10px] font-bold uppercase tracking-widest mt-1">Staff</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2a3437]/50 dark:text-white/40 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="font-label text-[10px] font-bold uppercase tracking-widest mt-1">Visits</span>
+</a>
+</nav>
+</div>
+</body></html>
