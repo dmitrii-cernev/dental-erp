@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - dental_data:/data
+    environment:
+      DATABASE_URL: sqlite:////data/dental_erp.db
+      SECRET_KEY: ${SECRET_KEY:-changeme-please-set-in-env}
+      ACCESS_TOKEN_EXPIRE_MINUTES: 480
+      CORS_ORIGINS: '["http://localhost:5173"]'
+    restart: unless-stopped
+
+volumes:
+  dental_data:
