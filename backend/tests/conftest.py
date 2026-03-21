@@ -4,6 +4,9 @@ import pytest
 def _import_all_models():
     """Import all models so they register with Base.metadata."""
     import dental_erp.users.models  # noqa: F401
+    import dental_erp.clients.models  # noqa: F401
+    import dental_erp.doctors.models  # noqa: F401
+    import dental_erp.workers.models  # noqa: F401
 
 
 @pytest.fixture(scope="function")

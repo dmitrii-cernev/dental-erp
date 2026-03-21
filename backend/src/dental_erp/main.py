@@ -3,7 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from dental_erp.core.config import settings
 from dental_erp.auth.router import router as auth_router
+from dental_erp.clients.router import router as clients_router
+from dental_erp.doctors.router import router as doctors_router
 from dental_erp.users.router import router as users_router
+from dental_erp.workers.router import router as workers_router
 
 
 def create_app() -> FastAPI:
@@ -17,6 +20,9 @@ def create_app() -> FastAPI:
     )
     app.include_router(auth_router)
     app.include_router(users_router)
+    app.include_router(clients_router)
+    app.include_router(doctors_router)
+    app.include_router(workers_router)
     return app
 
 
