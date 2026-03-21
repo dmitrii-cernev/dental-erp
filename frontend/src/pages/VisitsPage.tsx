@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getVisits, createVisit, updateVisit, deleteVisit } from '../api/visits';
 import { getClients } from '../api/clients';
 import { getDoctors } from '../api/doctors';
@@ -20,6 +21,8 @@ const STATUSES: { value: '' | VisitStatus; label: string }[] = [
 ];
 
 export function VisitsPage() {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [visits, setVisits] = useState<VisitRead[]>([]);
   const [clients, setClients] = useState<ClientRead[]>([]);
   const [doctors, setDoctors] = useState<DoctorRead[]>([]);
@@ -62,6 +65,14 @@ export function VisitsPage() {
   };
 
   useEffect(() => { loadAll(); }, []);
+
+  useEffect(() => {
+    if (searchParams.get('new') === '1') {
+      setEditing(null);
+      setModalOpen(true);
+      navigate('/visits', { replace: true });
+    }
+  }, [searchParams]);
 
   const openAdd = () => { setEditing(null); setModalOpen(true); };
   const openEdit = (v: VisitRead) => { setEditing(v); setModalOpen(true); };

@@ -53,7 +53,7 @@ export function Sidebar() {
         {/* Bottom actions */}
         <div className="mt-auto pt-6 space-y-2">
           <button
-            onClick={() => navigate('/visits/new')}
+            onClick={() => navigate('/visits?new=1')}
             className="w-full bg-gradient-to-br from-primary to-primary-dim text-on-primary py-3 px-4 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-sm hover:opacity-95 transition-opacity"
           >
             <span className="material-symbols-outlined text-sm">add</span>
