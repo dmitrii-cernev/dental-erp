@@ -7,6 +7,7 @@ def _import_all_models():
     import dental_erp.clients.models  # noqa: F401
     import dental_erp.doctors.models  # noqa: F401
     import dental_erp.workers.models  # noqa: F401
+    import dental_erp.visits.models  # noqa: F401
 
 
 @pytest.fixture(scope="function")
@@ -41,13 +42,21 @@ def db_session(test_engine):
 
 
 @pytest.fixture
-def client(db_session):
+def client(test_engine, db_session):
+    from sqlalchemy.orm import sessionmaker
     from dental_erp.core.database import get_db
     from dental_erp.main import app
     from starlette.testclient import TestClient
 
+    # db_session seeds data; API gets its own session on same engine (StaticPool = same in-memory DB)
+    ApiSession = sessionmaker(bind=test_engine)
+
     def override_get_db():
-        yield db_session
+        session = ApiSession()
+        try:
+            yield session
+        finally:
+            session.close()
 
     app.dependency_overrides[get_db] = override_get_db
     with TestClient(app) as c:
