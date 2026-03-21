@@ -1,8 +1,6 @@
 services:
   backend:
     build: ./backend
-    ports:
-      - "8000:8000"
     volumes:
       - ./data:/data
     environment:
@@ -10,16 +8,22 @@ services:
       SECRET_KEY: ${SECRET_KEY:-changeme-please-set-in-env}
       ACCESS_TOKEN_EXPIRE_MINUTES: 480
       CORS_ORIGINS: '["http://localhost:5173","http://localhost","http://localhost:80"]'
+    networks:
+      - internal
     restart: unless-stopped
 
   frontend:
     build:
       context: ./frontend
       args:
-        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8000}
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://backend:8000}
     ports:
-      - "80:80"
+      - "${FRONTEND_PORT:-1108}:80"
     depends_on:
       - backend
+    networks:
+      - internal
     restart: unless-stopped
 
+networks:
+  internal:
