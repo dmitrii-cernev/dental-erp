@@ -20,6 +20,11 @@ def upsert_price(
     service = db.query(Service).filter(Service.id == service_id).first()
     if not service:
         raise HTTPException(status_code=404, detail="Service not found")
+    if data.price <= 0:
+        raise HTTPException(
+            status_code=422,
+            detail="Worker price must be greater than zero",
+        )
     if data.price >= service.price:
         raise HTTPException(
             status_code=422,

@@ -131,3 +131,24 @@ def test_api_delete_price(client, auth_headers, seeded_worker_api, seeded_servic
 def test_api_worker_not_found(client, auth_headers):
     r = client.get("/workers/99999/prices", headers=auth_headers)
     assert r.status_code == 404
+
+
+def test_upsert_price_updates_existing_entry(db_session, seeded_worker, seeded_service):
+    from dental_erp.worker_price_list import service as svc
+    from dental_erp.worker_price_list.schemas import WorkerPriceUpsert
+
+    svc.upsert_price(db_session, seeded_worker.id, seeded_service.id, WorkerPriceUpsert(price=Decimal("30.00")))
+    updated = svc.upsert_price(db_session, seeded_worker.id, seeded_service.id, WorkerPriceUpsert(price=Decimal("45.00")))
+    assert updated.price == Decimal("45.00")
+    entries = svc.list_prices(db_session, seeded_worker.id)
+    assert len(entries) == 1
+
+
+def test_upsert_price_rejects_zero_price(db_session, seeded_worker, seeded_service):
+    from dental_erp.worker_price_list import service as svc
+    from dental_erp.worker_price_list.schemas import WorkerPriceUpsert
+    from fastapi import HTTPException
+
+    with pytest.raises(HTTPException) as exc:
+        svc.upsert_price(db_session, seeded_worker.id, seeded_service.id, WorkerPriceUpsert(price=Decimal("0.00")))
+    assert exc.value.status_code == 422

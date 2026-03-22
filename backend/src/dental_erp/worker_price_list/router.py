@@ -20,6 +20,8 @@ def _resolve_worker(worker_id: int, db: Session):
 
 def _to_read(entry, db: Session) -> WorkerPriceRead:
     service = db.query(Service).filter(Service.id == entry.service_id).first()
+    if not service:
+        raise HTTPException(status_code=404, detail="Associated service not found")
     return WorkerPriceRead(
         worker_id=entry.worker_id,
         service_id=entry.service_id,
