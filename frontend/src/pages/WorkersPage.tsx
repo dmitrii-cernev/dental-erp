@@ -74,6 +74,7 @@ export function WorkersPage() {
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Staff Member</th>
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Contact</th>
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Added</th>
+                <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Prices</th>
                 <th className="px-8 py-4 text-right text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Actions</th>
               </tr>
             </thead>
@@ -103,7 +104,19 @@ export function WorkersPage() {
                   </td>
                   <td className="px-8 py-4 text-sm text-on-surface-variant">{formatDate(w.created_at)}</td>
                   <td className="px-8 py-4">
+                    <button
+                      onClick={() => navigate(`/workers/${w.id}`)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/60 text-on-secondary-container text-xs font-semibold hover:bg-secondary-container transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-sm">payments</span>
+                      {w.prices_count ?? 0}
+                    </button>
+                  </td>
+                  <td className="px-8 py-4">
                     <div className="flex items-center justify-end gap-2">
+                      <button onClick={() => navigate(`/workers/${w.id}`)} className="w-9 h-9 rounded-xl hover:bg-surface-container flex items-center justify-center transition-colors text-on-surface-variant hover:text-primary" title="Price list">
+                        <span className="material-symbols-outlined text-base">paid</span>
+                      </button>
                       <button onClick={() => openEdit(w)} className="w-9 h-9 rounded-xl hover:bg-surface-container flex items-center justify-center transition-colors text-on-surface-variant hover:text-primary">
                         <span className="material-symbols-outlined text-base">edit</span>
                       </button>

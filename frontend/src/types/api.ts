@@ -40,6 +40,7 @@ export interface DoctorRead extends DoctorBase {
 export interface WorkerRead extends PersonBase {
   id: number;
   created_at: string;
+  prices_count?: number;
 }
 
 export interface WorkerPriceRead {

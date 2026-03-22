@@ -9,6 +9,7 @@ class WorkerCreate(PersonBase):
 class WorkerRead(PersonBase):
     id: int
     created_at: datetime
+    prices_count: int = 0
 
     model_config = {"from_attributes": True}
 
