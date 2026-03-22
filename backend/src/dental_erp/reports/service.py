@@ -26,7 +26,7 @@ def generate_report(db: Session, request: ReportRequest) -> bytes:
             "date": v.date.isoformat() if v.date else "",
             "client": client_name,
             "doctors": doctors,
-            "services_provided": ", ".join(s.name for s in v.services),
+            "services_provided": ", ".join(item.service.name for item in v.service_items if item.service),
             "status": v.status,
             "price": v.price,
         })
