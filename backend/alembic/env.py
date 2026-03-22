@@ -18,6 +18,7 @@ import dental_erp.doctors.models  # noqa: F401
 import dental_erp.workers.models  # noqa: F401
 import dental_erp.services.models  # noqa: F401 — must be before visits (FK dependency)
 import dental_erp.visits.models  # noqa: F401
+import dental_erp.worker_price_list.models  # noqa: F401
 
 config = context.config
 config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)

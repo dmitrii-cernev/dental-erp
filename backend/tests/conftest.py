@@ -9,6 +9,7 @@ def _import_all_models():
     import dental_erp.workers.models  # noqa: F401
     import dental_erp.services.models  # noqa: F401
     import dental_erp.visits.models  # noqa: F401
+    import dental_erp.worker_price_list.models  # noqa: F401
 
 
 @pytest.fixture(scope="function")
