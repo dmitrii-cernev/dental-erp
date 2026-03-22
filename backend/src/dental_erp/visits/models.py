@@ -46,7 +46,7 @@ class VisitServiceItem(Base):
     service_id: Mapped[int] = mapped_column(ForeignKey("services.id"))
     quantity: Mapped[int] = mapped_column(default=1)
 
-    service: Mapped["Service"] = relationship("Service")
+    service: Mapped["Service"] = relationship("Service", viewonly=True)
 
 
 class Visit(Base):
