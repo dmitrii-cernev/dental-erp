@@ -7,6 +7,7 @@ const navItems = [
   { to: '/visits', icon: 'calendar_today', label: 'Visits' },
   { to: '/doctors', icon: 'medical_services', label: 'Doctors' },
   { to: '/workers', icon: 'badge', label: 'Workers' },
+  { to: '/services', icon: 'category', label: 'Services' },
   { to: '/reports', icon: 'analytics', label: 'Reports' },
 ];
 

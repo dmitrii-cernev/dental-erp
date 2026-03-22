@@ -4,7 +4,8 @@ import { getVisits, createVisit, updateVisit, deleteVisit } from '../api/visits'
 import { getClients } from '../api/clients';
 import { getDoctors } from '../api/doctors';
 import { getWorkers } from '../api/workers';
-import type { VisitRead, VisitCreate, ClientRead, DoctorRead, WorkerRead, VisitStatus } from '../types/api';
+import { getServices } from '../api/services';
+import type { VisitRead, VisitCreate, ClientRead, DoctorRead, WorkerRead, ServiceRead, VisitStatus } from '../types/api';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
@@ -27,6 +28,7 @@ export function VisitsPage() {
   const [clients, setClients] = useState<ClientRead[]>([]);
   const [doctors, setDoctors] = useState<DoctorRead[]>([]);
   const [workers, setWorkers] = useState<WorkerRead[]>([]);
+  const [services, setServices] = useState<ServiceRead[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<VisitRead | null>(null);
@@ -49,16 +51,18 @@ export function VisitsPage() {
     if (clientFilter) filters.client_id = clientFilter as number;
 
     try {
-      const [v, c, d, w] = await Promise.all([
+      const [v, c, d, w, s] = await Promise.all([
         getVisits(filters as import('../types/api').VisitFilters),
         getClients(),
         getDoctors(),
         getWorkers(),
+        getServices(),
       ]);
       setVisits(v);
       setClients(c);
       setDoctors(d);
       setWorkers(w);
+      setServices(s);
     } finally {
       setLoading(false);
     }
@@ -170,6 +174,7 @@ export function VisitsPage() {
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Date</th>
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Patient</th>
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Doctors</th>
+                <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Services</th>
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Status</th>
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Price</th>
                 <th className="px-8 py-4 text-right text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Actions</th>
@@ -177,7 +182,7 @@ export function VisitsPage() {
             </thead>
             <tbody>
               {visits.length === 0 && (
-                <tr><td colSpan={6} className="text-center py-12 text-on-surface-variant">No visits found.</td></tr>
+                <tr><td colSpan={7} className="text-center py-12 text-on-surface-variant">No visits found.</td></tr>
               )}
               {visits.map(v => (
                 <tr key={v.id} className="hover:bg-surface-container-low/40 transition-colors">
@@ -185,6 +190,9 @@ export function VisitsPage() {
                   <td className="px-8 py-4 text-sm font-medium text-on-surface">{clientName(v.client_id)}</td>
                   <td className="px-8 py-4 text-sm text-on-surface-variant">
                     {v.doctors.length > 0 ? v.doctors.map(d => `Dr. ${d.surname}`).join(', ') : '—'}
+                  </td>
+                  <td className="px-8 py-4 text-sm text-on-surface-variant">
+                    {v.services.length > 0 ? v.services.map(s => s.name).join(', ') : '—'}
                   </td>
                   <td className="px-8 py-4"><StatusBadge status={v.status} /></td>
                   <td className="px-8 py-4 text-sm font-semibold text-on-surface">{formatCurrency(v.price)}</td>
@@ -211,6 +219,7 @@ export function VisitsPage() {
           clients={clients}
           doctors={doctors}
           workers={workers}
+          services={services}
           onSubmit={handleSubmit}
           onCancel={closeModal}
           loading={saving}

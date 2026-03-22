@@ -7,6 +7,7 @@ def _import_all_models():
     import dental_erp.clients.models  # noqa: F401
     import dental_erp.doctors.models  # noqa: F401
     import dental_erp.workers.models  # noqa: F401
+    import dental_erp.services.models  # noqa: F401
     import dental_erp.visits.models  # noqa: F401
 
 

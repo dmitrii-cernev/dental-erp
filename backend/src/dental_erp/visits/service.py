@@ -1,9 +1,11 @@
 from datetime import datetime
+from decimal import Decimal
 
 from sqlalchemy.orm import Session
 
 from dental_erp.clients.models import Client
 from dental_erp.doctors.models import Doctor
+from dental_erp.services.models import Service
 from dental_erp.visits.filters import VisitFilter
 from dental_erp.visits.models import Visit, visit_doctors
 from dental_erp.visits.schemas import VisitCreate, VisitUpdate
@@ -15,14 +17,17 @@ def create_visit(db: Session, data: VisitCreate) -> Visit:
     if not client:
         return None
 
+    selected = db.query(Service).filter(Service.id.in_(data.service_ids)).all() if data.service_ids else []
+    computed_price = sum((s.price for s in selected), Decimal("0"))
+
     visit = Visit(
         client_id=data.client_id,
         date=data.date,
-        services_provided=data.services_provided,
         comments=data.comments,
-        price=data.price,
+        price=computed_price,
         status=data.status,
     )
+    visit.services = selected
 
     if data.doctor_ids:
         visit.doctors = db.query(Doctor).filter(Doctor.id.in_(data.doctor_ids)).all()
@@ -59,14 +64,14 @@ def list_visits(db: Session, filters: VisitFilter) -> list[Visit]:
 def update_visit(db: Session, visit: Visit, data: VisitUpdate) -> Visit:
     if data.date is not None:
         visit.date = data.date
-    if data.services_provided is not None:
-        visit.services_provided = data.services_provided
     if data.comments is not None:
         visit.comments = data.comments
-    if data.price is not None:
-        visit.price = data.price
     if data.status is not None:
         visit.status = data.status
+    if data.service_ids is not None:
+        selected = db.query(Service).filter(Service.id.in_(data.service_ids)).all()
+        visit.services = selected
+        visit.price = sum((s.price for s in selected), Decimal("0"))
     if data.doctor_ids is not None:
         visit.doctors = db.query(Doctor).filter(Doctor.id.in_(data.doctor_ids)).all()
     if data.worker_ids is not None:

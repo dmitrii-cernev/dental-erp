@@ -12,6 +12,7 @@ from dental_erp.core.database import Base
 
 if TYPE_CHECKING:
     from dental_erp.doctors.models import Doctor
+    from dental_erp.services.models import Service
     from dental_erp.workers.models import Worker
 
 
@@ -36,6 +37,13 @@ visit_workers = Table(
     Column("worker_id", ForeignKey("workers.id"), primary_key=True),
 )
 
+visit_services = Table(
+    "visit_services",
+    Base.metadata,
+    Column("visit_id", ForeignKey("visits.id"), primary_key=True),
+    Column("service_id", ForeignKey("services.id"), primary_key=True),
+)
+
 
 class Visit(Base):
     __tablename__ = "visits"
@@ -43,7 +51,6 @@ class Visit(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     client_id: Mapped[int] = mapped_column(ForeignKey("clients.id"))
     date: Mapped[datetime]
-    services_provided: Mapped[str | None]
     comments: Mapped[str | None]
     price: Mapped[Decimal] = mapped_column(Numeric(10, 2, asdecimal=True), default=0)
     status: Mapped[str] = mapped_column(default=VisitStatus.scheduled)
@@ -51,3 +58,4 @@ class Visit(Base):
 
     doctors: Mapped[List["Doctor"]] = relationship("Doctor", secondary=visit_doctors)
     workers: Mapped[List["Worker"]] = relationship("Worker", secondary=visit_workers)
+    services: Mapped[List["Service"]] = relationship("Service", secondary=visit_services)

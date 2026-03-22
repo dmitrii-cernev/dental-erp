@@ -9,6 +9,7 @@ import { DoctorsPage } from '../pages/DoctorsPage';
 import { WorkersPage } from '../pages/WorkersPage';
 import { VisitsPage } from '../pages/VisitsPage';
 import { ReportsPage } from '../pages/ReportsPage';
+import { ServicesPage } from '../pages/ServicesPage';
 
 export function AppRouter() {
   return (
@@ -29,6 +30,7 @@ export function AppRouter() {
             <Route path="/doctors" element={<DoctorsPage />} />
             <Route path="/workers" element={<WorkersPage />} />
             <Route path="/visits" element={<VisitsPage />} />
+            <Route path="/services" element={<ServicesPage />} />
             <Route path="/reports" element={<ReportsPage />} />
           </Route>
         </Routes>

@@ -38,6 +38,27 @@ export interface WorkerRead extends PersonBase {
   created_at: string;
 }
 
+// Services
+export interface ServiceCreate {
+  name: string;
+  price?: string;
+  steps?: string[];
+}
+
+export interface ServiceUpdate {
+  name?: string;
+  price?: string;
+  steps?: string[];
+}
+
+export interface ServiceRead {
+  id: number;
+  name: string;
+  price: string;
+  steps: string[];
+  created_at: string;
+}
+
 // Visits
 export type VisitStatus = 'scheduled' | 'completed' | 'cancelled' | 'no_show';
 
@@ -46,9 +67,8 @@ export interface VisitCreate {
   date: string;
   doctor_ids?: number[];
   worker_ids?: number[];
-  services_provided?: string | null;
+  service_ids?: number[];
   comments?: string | null;
-  price?: string;
   status?: VisitStatus;
 }
 
@@ -57,9 +77,8 @@ export interface VisitUpdate {
   date?: string;
   doctor_ids?: number[];
   worker_ids?: number[];
-  services_provided?: string | null;
+  service_ids?: number[];
   comments?: string | null;
-  price?: string;
   status?: VisitStatus;
 }
 
@@ -67,13 +86,13 @@ export interface VisitRead {
   id: number;
   client_id: number;
   date: string;
-  services_provided: string | null;
   comments: string | null;
   price: string;
   status: VisitStatus;
   created_at: string;
   doctors: DoctorRead[];
   workers: WorkerRead[];
+  services: ServiceRead[];
 }
 
 // Visit filter params

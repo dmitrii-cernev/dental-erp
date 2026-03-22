@@ -16,6 +16,7 @@ import dental_erp.users.models  # noqa: F401
 import dental_erp.clients.models  # noqa: F401
 import dental_erp.doctors.models  # noqa: F401
 import dental_erp.workers.models  # noqa: F401
+import dental_erp.services.models  # noqa: F401 — must be before visits (FK dependency)
 import dental_erp.visits.models  # noqa: F401
 
 config = context.config

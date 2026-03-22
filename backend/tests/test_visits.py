@@ -25,6 +25,17 @@ def seeded_doctor_obj(db_session):
 
 
 @pytest.fixture
+def seeded_service_obj(db_session):
+    from dental_erp.services.models import Service
+
+    s = Service(name="Cleaning", price=Decimal("75.00"), steps=["Scale", "Polish"])
+    db_session.add(s)
+    db_session.commit()
+    db_session.refresh(s)
+    return s
+
+
+@pytest.fixture
 def seeded_visits(db_session, seeded_client_obj, seeded_doctor_obj):
     from datetime import datetime
     from dental_erp.visits.models import Visit
@@ -49,7 +60,6 @@ def test_create_visit(client, auth_headers, seeded_client_obj, seeded_doctor_obj
             "client_id": seeded_client_obj.id,
             "doctor_ids": [seeded_doctor_obj.id],
             "date": "2026-04-01T10:00:00",
-            "price": "100.00",
         },
         headers=auth_headers,
     )
@@ -64,11 +74,50 @@ def test_create_visit_invalid_client_returns_404(client, auth_headers, seeded_do
             "client_id": 99999,
             "doctor_ids": [seeded_doctor_obj.id],
             "date": "2026-04-01T10:00:00",
-            "price": "0",
         },
         headers=auth_headers,
     )
     assert r.status_code == 404
+
+
+def test_create_visit_with_services(client, auth_headers, seeded_client_obj, seeded_service_obj):
+    r = client.post(
+        "/visits",
+        json={
+            "client_id": seeded_client_obj.id,
+            "service_ids": [seeded_service_obj.id],
+            "date": "2026-04-01T10:00:00",
+        },
+        headers=auth_headers,
+    )
+    assert r.status_code == 201
+    data = r.json()
+    assert Decimal(data["price"]) == Decimal("75.00")
+    assert data["services"][0]["id"] == seeded_service_obj.id
+
+
+def test_create_visit_no_services_price_is_zero(client, auth_headers, seeded_client_obj):
+    r = client.post(
+        "/visits",
+        json={
+            "client_id": seeded_client_obj.id,
+            "date": "2026-04-01T10:00:00",
+        },
+        headers=auth_headers,
+    )
+    assert r.status_code == 201
+    assert Decimal(r.json()["price"]) == Decimal("0")
+
+
+def test_update_visit_recalculates_price(client, auth_headers, seeded_visits, seeded_service_obj):
+    visit_id = seeded_visits[0].id
+    r = client.patch(
+        f"/visits/{visit_id}",
+        json={"service_ids": [seeded_service_obj.id]},
+        headers=auth_headers,
+    )
+    assert r.status_code == 200
+    assert Decimal(r.json()["price"]) == Decimal("75.00")
 
 
 def test_filter_by_date_range(client, auth_headers, seeded_visits):
