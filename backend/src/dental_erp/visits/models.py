@@ -12,6 +12,7 @@ from dental_erp.core.database import Base
 
 if TYPE_CHECKING:
     from dental_erp.doctors.models import Doctor
+    from dental_erp.services.models import Service
     from dental_erp.workers.models import Worker
 
 
@@ -44,6 +45,8 @@ class VisitServiceItem(Base):
     visit_id: Mapped[int] = mapped_column(ForeignKey("visits.id"))
     service_id: Mapped[int] = mapped_column(ForeignKey("services.id"))
     quantity: Mapped[int] = mapped_column(default=1)
+
+    service: Mapped["Service"] = relationship("Service")
 
 
 class Visit(Base):
