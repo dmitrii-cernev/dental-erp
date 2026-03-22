@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import type { VisitCreate, VisitRead, ClientRead, DoctorRead, WorkerRead, ServiceRead, VisitStatus } from '../../types/api';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
+import { MultiSelect } from '../ui/MultiSelect';
 import { Button } from '../ui/Button';
 import { toLocalDatetimeInput, toISOFromInput, formatCurrency } from '../../utils/formatters';
 
@@ -38,10 +39,6 @@ export function VisitForm({ initialValues = {}, clients, doctors, workers, servi
     .reduce((sum, s) => sum + parseFloat(s.price), 0)
     .toFixed(2);
 
-  const toggleId = (list: number[], setList: (v: number[]) => void, id: number) => {
-    setList(list.includes(id) ? list.filter(x => x !== id) : [...list, id]);
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
@@ -77,26 +74,16 @@ export function VisitForm({ initialValues = {}, clients, doctors, workers, servi
       {/* Date & time */}
       <Input label="Date & Time" icon="calendar_today" type="datetime-local" value={date} onChange={e => setDate(e.target.value)} required />
 
-      {/* Services multi-select pills */}
+      {/* Services multi-select dropdown */}
       <div>
-        <p className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">Services</p>
-        <div className="flex flex-wrap gap-2">
-          {services.map(s => (
-            <button
-              key={s.id}
-              type="button"
-              onClick={() => toggleId(serviceIds, setServiceIds, s.id)}
-              className={`px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
-                serviceIds.includes(s.id)
-                  ? 'bg-tertiary text-on-tertiary'
-                  : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
-              }`}
-            >
-              {s.name} — {formatCurrency(s.price)}
-            </button>
-          ))}
-          {services.length === 0 && <p className="text-sm text-on-surface-variant">No services defined yet.</p>}
-        </div>
+        <MultiSelect
+          label="Services"
+          icon="medical_services"
+          options={services.map(s => ({ value: s.id, label: `${s.name} — ${formatCurrency(s.price)}` }))}
+          value={serviceIds}
+          onChange={setServiceIds}
+          placeholder="Select services…"
+        />
         {serviceIds.length > 0 && (
           <p className="mt-2 text-sm font-semibold text-on-surface">
             Total: {formatCurrency(calculatedPrice)}
@@ -104,49 +91,25 @@ export function VisitForm({ initialValues = {}, clients, doctors, workers, servi
         )}
       </div>
 
-      {/* Doctor multi-select pills */}
-      <div>
-        <p className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">Doctors</p>
-        <div className="flex flex-wrap gap-2">
-          {doctors.map(d => (
-            <button
-              key={d.id}
-              type="button"
-              onClick={() => toggleId(doctorIds, setDoctorIds, d.id)}
-              className={`px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
-                doctorIds.includes(d.id)
-                  ? 'bg-primary text-on-primary'
-                  : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
-              }`}
-            >
-              {d.name} {d.surname}
-            </button>
-          ))}
-          {doctors.length === 0 && <p className="text-sm text-on-surface-variant">No doctors available.</p>}
-        </div>
-      </div>
+      {/* Doctor multi-select dropdown */}
+      <MultiSelect
+        label="Doctors"
+        icon="stethoscope"
+        options={doctors.map(d => ({ value: d.id, label: `${d.name} ${d.surname}` }))}
+        value={doctorIds}
+        onChange={setDoctorIds}
+        placeholder="Select doctors…"
+      />
 
-      {/* Worker multi-select pills */}
-      <div>
-        <p className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2">Staff</p>
-        <div className="flex flex-wrap gap-2">
-          {workers.map(w => (
-            <button
-              key={w.id}
-              type="button"
-              onClick={() => toggleId(workerIds, setWorkerIds, w.id)}
-              className={`px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
-                workerIds.includes(w.id)
-                  ? 'bg-secondary text-on-secondary'
-                  : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
-              }`}
-            >
-              {w.name} {w.surname}
-            </button>
-          ))}
-          {workers.length === 0 && <p className="text-sm text-on-surface-variant">No staff available.</p>}
-        </div>
-      </div>
+      {/* Worker multi-select dropdown */}
+      <MultiSelect
+        label="Staff"
+        icon="badge"
+        options={workers.map(w => ({ value: w.id, label: `${w.name} ${w.surname}` }))}
+        value={workerIds}
+        onChange={setWorkerIds}
+        placeholder="Select staff…"
+      />
 
       {/* Comments & Status */}
       <div className="flex flex-col gap-1.5">
