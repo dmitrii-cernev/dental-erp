@@ -42,6 +42,14 @@ export interface WorkerRead extends PersonBase {
   created_at: string;
 }
 
+export interface WorkerPriceRead {
+  worker_id: number;
+  service_id: number;
+  service_name: string;
+  service_price: string;
+  price: string;
+}
+
 // Services
 export interface ServiceCreate {
   name: string;
