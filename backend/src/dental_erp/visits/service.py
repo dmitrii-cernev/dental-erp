@@ -7,9 +7,29 @@ from dental_erp.clients.models import Client
 from dental_erp.doctors.models import Doctor
 from dental_erp.services.models import Service
 from dental_erp.visits.filters import VisitFilter
-from dental_erp.visits.models import Visit, visit_doctors
+from dental_erp.visits.models import Visit, VisitServiceItem, visit_doctors
 from dental_erp.visits.schemas import VisitCreate, VisitUpdate
 from dental_erp.workers.models import Worker
+
+
+def _build_service_items(db: Session, inputs) -> tuple[list[VisitServiceItem], Decimal]:
+    """Return (VisitServiceItem list, computed price) for a list of VisitServiceItemInput."""
+    if not inputs:
+        return [], Decimal("0")
+
+    service_map = {
+        s.id: s
+        for s in db.query(Service).filter(Service.id.in_([i.service_id for i in inputs])).all()
+    }
+    items = []
+    price = Decimal("0")
+    for inp in inputs:
+        svc = service_map.get(inp.service_id)
+        if svc is None:
+            continue
+        items.append(VisitServiceItem(service_id=inp.service_id, quantity=inp.quantity))
+        price += svc.price * inp.quantity
+    return items, price
 
 
 def create_visit(db: Session, data: VisitCreate) -> Visit:
@@ -17,8 +37,7 @@ def create_visit(db: Session, data: VisitCreate) -> Visit:
     if not client:
         return None
 
-    selected = db.query(Service).filter(Service.id.in_(data.service_ids)).all() if data.service_ids else []
-    computed_price = sum((s.price for s in selected), Decimal("0"))
+    items, computed_price = _build_service_items(db, data.service_items)
 
     visit = Visit(
         client_id=data.client_id,
@@ -27,7 +46,7 @@ def create_visit(db: Session, data: VisitCreate) -> Visit:
         price=computed_price,
         status=data.status,
     )
-    visit.services = selected
+    visit.service_items = items
 
     if data.doctor_ids:
         visit.doctors = db.query(Doctor).filter(Doctor.id.in_(data.doctor_ids)).all()
@@ -68,10 +87,10 @@ def update_visit(db: Session, visit: Visit, data: VisitUpdate) -> Visit:
         visit.comments = data.comments
     if data.status is not None:
         visit.status = data.status
-    if data.service_ids is not None:
-        selected = db.query(Service).filter(Service.id.in_(data.service_ids)).all()
-        visit.services = selected
-        visit.price = sum((s.price for s in selected), Decimal("0"))
+    if data.service_items is not None:
+        items, price = _build_service_items(db, data.service_items)
+        visit.service_items = items  # cascade delete-orphan removes old items
+        visit.price = price
     if data.doctor_ids is not None:
         visit.doctors = db.query(Doctor).filter(Doctor.id.in_(data.doctor_ids)).all()
     if data.worker_ids is not None:
