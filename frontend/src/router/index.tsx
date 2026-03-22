@@ -10,6 +10,7 @@ import { WorkersPage } from '../pages/WorkersPage';
 import { VisitsPage } from '../pages/VisitsPage';
 import { ReportsPage } from '../pages/ReportsPage';
 import { ServicesPage } from '../pages/ServicesPage';
+import { WorkerDetailPage } from '../pages/WorkerDetailPage';
 
 export function AppRouter() {
   return (
@@ -29,6 +30,7 @@ export function AppRouter() {
             <Route path="/patients" element={<PatientsPage />} />
             <Route path="/doctors" element={<DoctorsPage />} />
             <Route path="/workers" element={<WorkersPage />} />
+            <Route path="/workers/:id" element={<WorkerDetailPage />} />
             <Route path="/visits" element={<VisitsPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/reports" element={<ReportsPage />} />

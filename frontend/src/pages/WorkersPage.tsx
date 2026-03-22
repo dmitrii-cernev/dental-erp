@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getWorkers, createWorker, updateWorker, deleteWorker } from '../api/workers';
 import type { WorkerRead, PersonBase } from '../types/api';
 import { Button } from '../components/ui/Button';
@@ -8,6 +9,7 @@ import { PersonForm } from '../components/forms/PersonForm';
 import { formatDate, personInitials } from '../utils/formatters';
 
 export function WorkersPage() {
+  const navigate = useNavigate();
   const [workers, setWorkers] = useState<WorkerRead[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -86,7 +88,10 @@ export function WorkersPage() {
                       <div className="w-9 h-9 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-sm font-bold shrink-0">
                         {personInitials(w.name, w.surname)}
                       </div>
-                      <div>
+                      <div
+                        className="cursor-pointer hover:text-primary transition-colors"
+                        onClick={() => navigate(`/workers/${w.id}`)}
+                      >
                         <p className="font-semibold text-on-surface">{w.name} {w.surname}</p>
                         <p className="text-xs text-on-surface-variant">#{w.id}</p>
                       </div>
