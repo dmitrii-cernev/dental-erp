@@ -16,6 +16,7 @@ from dental_erp.dashboard.router import router as dashboard_router
 from dental_erp.reports.router import router as reports_router
 from dental_erp.visits.router import router as visits_router
 from dental_erp.workers.router import router as workers_router
+from dental_erp.worker_price_list.router import router as worker_prices_router
 
 
 def _seed_admin() -> None:
@@ -51,6 +52,7 @@ def create_app() -> FastAPI:
     app.include_router(clients_router)
     app.include_router(doctors_router)
     app.include_router(workers_router)
+    app.include_router(worker_prices_router)
     app.include_router(visits_router)
     app.include_router(services_router)
     app.include_router(reports_router)
