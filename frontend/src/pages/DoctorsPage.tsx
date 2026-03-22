@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { getDoctors, createDoctor, updateDoctor, deleteDoctor } from '../api/doctors';
-import type { DoctorRead, PersonBase } from '../types/api';
+import type { DoctorRead, DoctorBase } from '../types/api';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
-import { PersonForm } from '../components/forms/PersonForm';
+import { DoctorForm } from '../components/forms/DoctorForm';
 import { formatDate, personInitials } from '../utils/formatters';
 
 export function DoctorsPage() {
@@ -23,7 +23,7 @@ export function DoctorsPage() {
   const openEdit = (d: DoctorRead) => { setEditing(d); setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); setEditing(null); };
 
-  const handleSubmit = async (data: PersonBase) => {
+  const handleSubmit = async (data: DoctorBase) => {
     setSaving(true);
     try {
       if (editing) await updateDoctor(editing.id, data);
@@ -71,13 +71,14 @@ export function DoctorsPage() {
               <tr>
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Doctor</th>
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Contact</th>
+                <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Company</th>
                 <th className="px-8 py-4 text-left text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Added</th>
                 <th className="px-8 py-4 text-right text-xs font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container-low/30">Actions</th>
               </tr>
             </thead>
             <tbody>
               {doctors.length === 0 && (
-                <tr><td colSpan={4} className="text-center py-12 text-on-surface-variant">No doctors found.</td></tr>
+                <tr><td colSpan={5} className="text-center py-12 text-on-surface-variant">No doctors found.</td></tr>
               )}
               {doctors.map(d => (
                 <tr key={d.id} className="hover:bg-surface-container-low/40 transition-colors">
@@ -96,6 +97,7 @@ export function DoctorsPage() {
                     <p className="text-sm text-on-surface">{d.phone || '—'}</p>
                     <p className="text-xs text-on-surface-variant">{d.email || '—'}</p>
                   </td>
+                  <td className="px-8 py-4 text-sm text-on-surface-variant">{d.company || '—'}</td>
                   <td className="px-8 py-4 text-sm text-on-surface-variant">{formatDate(d.created_at)}</td>
                   <td className="px-8 py-4">
                     <div className="flex items-center justify-end gap-2">
@@ -115,7 +117,7 @@ export function DoctorsPage() {
       </div>
 
       <Modal open={modalOpen} onClose={closeModal} title={editing ? 'Edit Doctor' : 'Add Doctor'}>
-        <PersonForm initialValues={editing ?? {}} onSubmit={handleSubmit} onCancel={closeModal} loading={saving} />
+        <DoctorForm initialValues={editing ?? {}} onSubmit={handleSubmit} onCancel={closeModal} loading={saving} />
       </Modal>
 
       <ConfirmDialog

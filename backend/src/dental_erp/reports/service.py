@@ -18,7 +18,10 @@ def generate_report(db: Session, request: ReportRequest) -> bytes:
     visits_data = []
     for v in visits:
         client_name = f"Client #{v.client_id}"
-        doctors = [f"{d.name} {d.surname}" for d in v.doctors]
+        doctors = [
+            f"Dr. {d.name} {d.surname} ({d.company})" if d.company else f"Dr. {d.name} {d.surname}"
+            for d in v.doctors
+        ]
         visits_data.append({
             "date": v.date.isoformat() if v.date else "",
             "client": client_name,

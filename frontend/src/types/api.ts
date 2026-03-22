@@ -28,7 +28,11 @@ export interface ClientRead extends PersonBase {
   created_at: string;
 }
 
-export interface DoctorRead extends PersonBase {
+export interface DoctorBase extends PersonBase {
+  company?: string | null;
+}
+
+export interface DoctorRead extends DoctorBase {
   id: number;
   created_at: string;
 }

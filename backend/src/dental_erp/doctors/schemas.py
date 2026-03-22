@@ -2,17 +2,21 @@ from datetime import datetime
 from dental_erp.core.schemas import PersonBase
 
 
-class DoctorCreate(PersonBase):
+class DoctorBase(PersonBase):
+    company: str | None = None
+
+
+class DoctorCreate(DoctorBase):
     pass
 
 
-class DoctorRead(PersonBase):
+class DoctorRead(DoctorBase):
     id: int
     created_at: datetime
 
     model_config = {"from_attributes": True}
 
 
-class DoctorUpdate(PersonBase):
+class DoctorUpdate(DoctorBase):
     name: str | None = None
     surname: str | None = None
