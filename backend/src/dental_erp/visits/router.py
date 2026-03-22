@@ -17,7 +17,10 @@ def create_visit(
     db: Session = Depends(get_db),
     _=Depends(get_current_user),
 ):
-    visit = service.create_visit(db, data)
+    try:
+        visit = service.create_visit(db, data)
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))
     if visit is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Client not found")
     return visit
@@ -67,7 +70,10 @@ def update_visit(
     visit = service.get_visit(db, visit_id)
     if not visit:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Visit not found")
-    return service.update_visit(db, visit, data)
+    try:
+        return service.update_visit(db, visit, data)
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))
 
 
 @router.delete("/{visit_id}", status_code=status.HTTP_204_NO_CONTENT)

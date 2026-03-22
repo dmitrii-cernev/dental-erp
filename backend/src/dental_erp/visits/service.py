@@ -17,6 +17,12 @@ def _build_service_items(db: Session, inputs) -> tuple[list[VisitServiceItem], D
     if not inputs:
         return [], Decimal("0")
 
+    seen = set()
+    for inp in inputs:
+        if inp.service_id in seen:
+            raise ValueError(f"Duplicate service_id {inp.service_id} in service_items")
+        seen.add(inp.service_id)
+
     service_map = {
         s.id: s
         for s in db.query(Service).filter(Service.id.in_([i.service_id for i in inputs])).all()
@@ -26,7 +32,7 @@ def _build_service_items(db: Session, inputs) -> tuple[list[VisitServiceItem], D
     for inp in inputs:
         svc = service_map.get(inp.service_id)
         if svc is None:
-            continue
+            raise ValueError(f"Service {inp.service_id} not found")
         items.append(VisitServiceItem(service_id=inp.service_id, quantity=inp.quantity))
         price += svc.price * inp.quantity
     return items, price
