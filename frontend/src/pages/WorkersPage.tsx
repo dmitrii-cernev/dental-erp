@@ -68,6 +68,7 @@ export function WorkersPage() {
             <span className="material-symbols-outlined text-4xl text-primary animate-spin">refresh</span>
           </div>
         ) : (
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr>
@@ -129,6 +130,7 @@ export function WorkersPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 

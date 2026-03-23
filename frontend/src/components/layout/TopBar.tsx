@@ -1,13 +1,17 @@
 import { useAuth } from '../../context/AuthContext';
 import { personInitials } from '../../utils/formatters';
 
-export function TopBar() {
+export function TopBar({ onMenuToggle }: { onMenuToggle: () => void }) {
   const { currentUser } = useAuth();
 
   return (
-    <header className="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+    <header className="fixed top-0 left-0 lg:left-64 w-full lg:w-[calc(100%-16rem)] z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
       <div className="flex justify-between items-center h-16 px-8">
         <div className="flex items-center gap-4 flex-1">
+          <button onClick={onMenuToggle}
+            className="lg:hidden p-2 rounded-xl hover:bg-surface-container transition-colors text-on-surface-variant mr-1">
+            <span className="material-symbols-outlined">menu</span>
+          </button>
           <div className="relative w-full max-w-md">
             <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
             <input

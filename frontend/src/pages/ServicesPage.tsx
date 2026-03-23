@@ -66,6 +66,7 @@ export function ServicesPage() {
             <span className="material-symbols-outlined text-4xl text-primary animate-spin">refresh</span>
           </div>
         ) : (
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr>
@@ -109,6 +110,7 @@ export function ServicesPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 

@@ -11,12 +11,16 @@ const navItems = [
   { to: '/reports', icon: 'analytics', label: 'Reports' },
 ];
 
-export function Sidebar() {
+interface SidebarProps { isOpen: boolean; onClose: () => void; }
+
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   return (
-    <aside className="h-screen w-64 fixed left-0 top-0 bg-slate-100 z-50 border-r border-slate-200/60">
+    <aside className={`h-screen w-64 fixed left-0 top-0 bg-slate-100 z-50 border-r border-slate-200/60
+      transition-transform duration-300
+      ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
       <div className="flex flex-col h-full py-6 px-4">
         {/* Logo */}
         <div className="mb-8 px-4">
@@ -28,6 +32,10 @@ export function Sidebar() {
               <h1 className="text-xl font-bold text-sky-900 leading-none font-headline">DentalPro</h1>
               <p className="text-[10px] font-medium text-on-surface-variant tracking-wider uppercase mt-1">Clinical ERP</p>
             </div>
+            <button onClick={onClose}
+              className="lg:hidden ml-auto p-1 rounded-lg hover:bg-slate-200 transition-colors text-slate-600">
+              <span className="material-symbols-outlined">close</span>
+            </button>
           </div>
         </div>
 
@@ -37,6 +45,7 @@ export function Sidebar() {
             <NavLink
               key={to}
               to={to}
+              onClick={onClose}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   isActive
@@ -54,14 +63,14 @@ export function Sidebar() {
         {/* Bottom actions */}
         <div className="mt-auto pt-6 space-y-2">
           <button
-            onClick={() => navigate('/visits?new=1')}
+            onClick={() => { navigate('/visits?new=1'); onClose(); }}
             className="w-full bg-gradient-to-br from-primary to-primary-dim text-on-primary py-3 px-4 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-sm hover:opacity-95 transition-opacity"
           >
             <span className="material-symbols-outlined text-sm">add</span>
             <span>New Visit</span>
           </button>
           <button
-            onClick={logout}
+            onClick={() => { logout(); onClose(); }}
             className="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-200/60 rounded-lg transition-colors"
           >
             <span className="material-symbols-outlined">logout</span>

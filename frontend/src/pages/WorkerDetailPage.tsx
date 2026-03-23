@@ -170,6 +170,7 @@ export function WorkerDetailPage() {
         {prices.length === 0 ? (
           <div className="text-center py-12 text-on-surface-variant">No prices configured yet.</div>
         ) : (
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr>
@@ -215,6 +216,7 @@ export function WorkerDetailPage() {
               })}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 
