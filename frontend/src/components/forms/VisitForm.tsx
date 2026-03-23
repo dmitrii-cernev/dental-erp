@@ -29,14 +29,36 @@ export function VisitForm({ initialValues = {}, clients, doctors, workers, servi
   const [date, setDate] = useState(initialValues.date ? toLocalDatetimeInput(initialValues.date) : '');
   const [doctorIds, setDoctorIds] = useState<number[]>(initialValues.doctors?.map(d => d.id) ?? []);
   const [workerIds, setWorkerIds] = useState<number[]>(initialValues.workers?.map(w => w.id) ?? []);
-  const [serviceIds, setServiceIds] = useState<number[]>(initialValues.service_items?.map(item => item.service_id) ?? []);
+  const [serviceItems, setServiceItems] = useState<VisitServiceItemInput[]>(
+    initialValues.service_items?.map(item => ({ service_id: item.service_id, quantity: item.quantity })) ?? []
+  );
   const [comments, setComments] = useState(initialValues.comments ?? '');
   const [status, setStatus] = useState<VisitStatus>(initialValues.status ?? 'scheduled');
   const [error, setError] = useState('');
 
-  const calculatedPrice = services
-    .filter(s => serviceIds.includes(s.id))
-    .reduce((sum, s) => sum + parseFloat(s.price), 0)
+  // When MultiSelect changes, preserve existing quantities for services that remain selected
+  const handleServiceChange = (newIds: number[]) => {
+    setServiceItems(prev => {
+      const prevMap = new Map(prev.map(item => [item.service_id, item.quantity]));
+      return newIds.map(id => ({ service_id: id, quantity: prevMap.get(id) ?? 1 }));
+    });
+  };
+
+  const updateQty = (serviceId: number, delta: number) => {
+    setServiceItems(prev =>
+      prev.map(item =>
+        item.service_id === serviceId
+          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+          : item
+      )
+    );
+  };
+
+  const calculatedPrice = serviceItems
+    .reduce((sum, item) => {
+      const svc = services.find(s => s.id === item.service_id);
+      return sum + (svc ? parseFloat(svc.price) * item.quantity : 0);
+    }, 0)
     .toFixed(2);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -52,7 +74,7 @@ export function VisitForm({ initialValues = {}, clients, doctors, workers, servi
         date: toISOFromInput(date),
         doctor_ids: doctorIds,
         worker_ids: workerIds,
-        service_items: serviceIds.map((id): VisitServiceItemInput => ({ service_id: id, quantity: 1 })),
+        service_items: serviceItems,
         comments: comments.trim() || null,
         status,
       });
@@ -74,20 +96,51 @@ export function VisitForm({ initialValues = {}, clients, doctors, workers, servi
       {/* Date & time */}
       <Input label="Date & Time" icon="calendar_today" type="datetime-local" value={date} onChange={e => setDate(e.target.value)} required />
 
-      {/* Services multi-select dropdown */}
+      {/* Services multi-select + quantity steppers */}
       <div>
         <MultiSelect
           label="Services"
           icon="medical_services"
           options={services.map(s => ({ value: s.id, label: `${s.name} — ${formatCurrency(s.price)}` }))}
-          value={serviceIds}
-          onChange={setServiceIds}
+          value={serviceItems.map(item => item.service_id)}
+          onChange={handleServiceChange}
           placeholder="Select services…"
         />
-        {serviceIds.length > 0 && (
-          <p className="mt-2 text-sm font-semibold text-on-surface">
-            Total: {formatCurrency(calculatedPrice)}
-          </p>
+        {serviceItems.length > 0 && (
+          <div className="mt-2 flex flex-col gap-1.5">
+            {serviceItems.map(item => {
+              const svc = services.find(s => s.id === item.service_id);
+              if (!svc) return null;
+              return (
+                <div key={item.service_id} className="flex items-center justify-between px-3 py-2 bg-surface-container-low rounded-xl">
+                  <span className="text-sm text-on-surface">{svc.name}</span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => updateQty(item.service_id, -1)}
+                      className="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-sm">remove</span>
+                    </button>
+                    <span className="text-sm font-semibold text-on-surface w-6 text-center">{item.quantity}</span>
+                    <button
+                      type="button"
+                      onClick={() => updateQty(item.service_id, 1)}
+                      className="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-sm">add</span>
+                    </button>
+                    <span className="text-xs text-on-surface-variant w-20 text-right">
+                      {formatCurrency(String((item.quantity * parseFloat(svc.price)).toFixed(2)))}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+            <p className="mt-1 text-sm font-semibold text-on-surface text-right pr-1">
+              Total: {formatCurrency(calculatedPrice)}
+            </p>
+          </div>
         )}
       </div>
 
