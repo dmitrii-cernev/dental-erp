@@ -99,7 +99,7 @@ export function DashboardPage() {
                     <div className="h-8 w-px bg-outline-variant/30" />
                     <div className="flex-1">
                       <p className="font-semibold text-on-surface text-sm">Client #{visit.client_id}</p>
-                      {visit.service_items.length > 0 && <p className="text-xs text-on-surface-variant">{visit.service_items.map(item => item.service.name).join(', ')}</p>}
+                      {visit.service_items.length > 0 && <p className="text-xs text-on-surface-variant">{visit.service_items.map(item => item.quantity > 1 ? `${item.service.name} ×${item.quantity}` : item.service.name).join(', ')}</p>}
                     </div>
                     <StatusBadge status={visit.status} />
                     <span className="text-sm font-semibold text-on-surface">{formatCurrency(visit.price)}</span>

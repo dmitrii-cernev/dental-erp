@@ -193,7 +193,7 @@ export function VisitsPage() {
                     {v.doctors.length > 0 ? v.doctors.map(d => `Dr. ${d.surname}`).join(', ') : '—'}
                   </td>
                   <td className="px-8 py-4 text-sm text-on-surface-variant">
-                    {v.service_items.length > 0 ? v.service_items.map(item => item.service.name).join(', ') : '—'}
+                    {v.service_items.length > 0 ? v.service_items.map(item => item.quantity > 1 ? `${item.service.name} ×${item.quantity}` : item.service.name).join(', ') : '—'}
                   </td>
                   <td className="px-8 py-4"><StatusBadge status={v.status} /></td>
                   <td className="px-8 py-4 text-sm font-semibold text-on-surface">{formatCurrency(v.price)}</td>

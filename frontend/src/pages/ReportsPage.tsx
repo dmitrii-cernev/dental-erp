@@ -136,7 +136,7 @@ export function ReportsPage() {
                 <tr key={v.id} className="hover:bg-surface-container-low/40 transition-colors">
                   <td className="px-6 py-3 text-sm text-on-surface">{formatDateTime(v.date)}</td>
                   <td className="px-6 py-3 text-sm text-on-surface">{clientName(v.client_id)}</td>
-                  <td className="px-6 py-3 text-sm text-on-surface-variant">{v.service_items.length > 0 ? v.service_items.map(item => item.service.name).join(', ') : '—'}</td>
+                  <td className="px-6 py-3 text-sm text-on-surface-variant">{v.service_items.length > 0 ? v.service_items.map(item => item.quantity > 1 ? `${item.service.name} ×${item.quantity}` : item.service.name).join(', ') : '—'}</td>
                   <td className="px-6 py-3"><StatusBadge status={v.status} /></td>
                   <td className="px-6 py-3 text-sm font-semibold text-on-surface text-right">{formatCurrency(v.price)}</td>
                 </tr>
