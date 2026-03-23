@@ -29,6 +29,7 @@ export function VisitForm({ initialValues = {}, clients, doctors, workers, servi
   const [date, setDate] = useState(initialValues.date ? toLocalDatetimeInput(initialValues.date) : '');
   const [doctorIds, setDoctorIds] = useState<number[]>(initialValues.doctors?.map(d => d.id) ?? []);
   const [workerIds, setWorkerIds] = useState<number[]>(initialValues.workers?.map(w => w.id) ?? []);
+  // initialValues.service_items is VisitServiceItemRead[] when editing; we narrow to input shape by dropping the nested service object
   const [serviceItems, setServiceItems] = useState<VisitServiceItemInput[]>(
     initialValues.service_items?.map(item => ({ service_id: item.service_id, quantity: item.quantity })) ?? []
   );
@@ -86,7 +87,7 @@ export function VisitForm({ initialValues = {}, clients, doctors, workers, servi
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       {/* Client */}
-      <Select label="Patient" icon="person" value={clientId} onChange={e => setClientId(Number(e.target.value))} required>
+      <Select label="Patient" icon="person" value={clientId} onChange={e => setClientId(e.target.value ? Number(e.target.value) : '')} required>
         <option value="">Select patient…</option>
         {clients.map(c => (
           <option key={c.id} value={c.id}>{c.name} {c.surname}</option>
