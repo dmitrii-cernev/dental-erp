@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import type { VisitCreate, VisitRead, ClientRead, DoctorRead, WorkerRead, ServiceRead, VisitStatus } from '../../types/api';
+import type { VisitCreate, VisitRead, ClientRead, DoctorRead, WorkerRead, ServiceRead, VisitStatus, VisitServiceItemInput } from '../../types/api';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 import { MultiSelect } from '../ui/MultiSelect';
@@ -29,7 +29,7 @@ export function VisitForm({ initialValues = {}, clients, doctors, workers, servi
   const [date, setDate] = useState(initialValues.date ? toLocalDatetimeInput(initialValues.date) : '');
   const [doctorIds, setDoctorIds] = useState<number[]>(initialValues.doctors?.map(d => d.id) ?? []);
   const [workerIds, setWorkerIds] = useState<number[]>(initialValues.workers?.map(w => w.id) ?? []);
-  const [serviceIds, setServiceIds] = useState<number[]>(initialValues.services?.map(s => s.id) ?? []);
+  const [serviceIds, setServiceIds] = useState<number[]>(initialValues.service_items?.map(item => item.service_id) ?? []);
   const [comments, setComments] = useState(initialValues.comments ?? '');
   const [status, setStatus] = useState<VisitStatus>(initialValues.status ?? 'scheduled');
   const [error, setError] = useState('');
@@ -52,7 +52,7 @@ export function VisitForm({ initialValues = {}, clients, doctors, workers, servi
         date: toISOFromInput(date),
         doctor_ids: doctorIds,
         worker_ids: workerIds,
-        service_ids: serviceIds,
+        service_items: serviceIds.map((id): VisitServiceItemInput => ({ service_id: id, quantity: 1 })),
         comments: comments.trim() || null,
         status,
       });

@@ -168,6 +168,7 @@ export function VisitsPage() {
             <span className="material-symbols-outlined text-4xl text-primary animate-spin">refresh</span>
           </div>
         ) : (
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr>
@@ -192,7 +193,7 @@ export function VisitsPage() {
                     {v.doctors.length > 0 ? v.doctors.map(d => `Dr. ${d.surname}`).join(', ') : '—'}
                   </td>
                   <td className="px-8 py-4 text-sm text-on-surface-variant">
-                    {v.services.length > 0 ? v.services.map(s => s.name).join(', ') : '—'}
+                    {v.service_items.length > 0 ? v.service_items.map(item => item.service.name).join(', ') : '—'}
                   </td>
                   <td className="px-8 py-4"><StatusBadge status={v.status} /></td>
                   <td className="px-8 py-4 text-sm font-semibold text-on-surface">{formatCurrency(v.price)}</td>
@@ -210,6 +211,7 @@ export function VisitsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 

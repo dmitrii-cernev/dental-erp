@@ -75,12 +75,23 @@ export interface ServiceRead {
 // Visits
 export type VisitStatus = 'scheduled' | 'completed' | 'cancelled' | 'no_show';
 
+export interface VisitServiceItemInput {
+  service_id: number;
+  quantity: number;
+}
+
+export interface VisitServiceItemRead {
+  service_id: number;
+  quantity: number;
+  service: ServiceRead;
+}
+
 export interface VisitCreate {
   client_id: number;
   date: string;
   doctor_ids?: number[];
   worker_ids?: number[];
-  service_ids?: number[];
+  service_items?: VisitServiceItemInput[];
   comments?: string | null;
   status?: VisitStatus;
 }
@@ -90,7 +101,7 @@ export interface VisitUpdate {
   date?: string;
   doctor_ids?: number[];
   worker_ids?: number[];
-  service_ids?: number[];
+  service_items?: VisitServiceItemInput[];
   comments?: string | null;
   status?: VisitStatus;
 }
@@ -105,7 +116,7 @@ export interface VisitRead {
   created_at: string;
   doctors: DoctorRead[];
   workers: WorkerRead[];
-  services: ServiceRead[];
+  service_items: VisitServiceItemRead[];
 }
 
 // Visit filter params
